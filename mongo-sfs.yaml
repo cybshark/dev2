@@ -17,7 +17,7 @@ spec:
   spec:
    containers:
    - name: mongodb
-     image:  image-registry.openshift-image-registry.svc:5000/test/mongo:v4.2.0
+     image:  mongo:v4.2.0
    - env:
       - name: MONGO_INITDB_ROOT_USERNAME
         value: root
