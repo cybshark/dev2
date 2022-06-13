@@ -1,40 +1,35 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
- name: mongodb
- namespace: test
+  name: mongodb
+  namespace: test
 spec:
- serviceName: "mongodb"
- selector:
-  matchLabels:
-   app: mongodb  
- replicas: 3
- template:
-  metadata:
-   labels:
-    app: mongodb
-    environment: test
-  spec:
-   containers:
-   - name: mongodb
-     image:  mongo:v4.2.0
-   - env:
-      - name: MONGO_INITDB_ROOT_USERNAME
-        value: root
-      - name: MONGO_INITDB_ROOT_PASSWORD
-        value: password
-        
-     #lifecycle:
-     # postStart:
-     ##    command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
-     command:
-            - "mongod"
-            - "--keyFile"
-            - "mongo.keyfile"
-            - "--bind_ip_all"
-            - "0.0.0.0"
-            - "--replSet"
-            - "rs0"        
-     ports:
-      - containerPort: 27017
-     
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mongodb
+  serviceName: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+        environment: test
+    spec:
+      containers:
+      - image: mongo:v4.2.0
+        name: mongodb
+      - command:
+        - mongod
+        - --keyFile
+        - mongo.keyfile
+        - --bind_ip_all
+        - 0.0.0.0
+        - --replSet
+        - rs0
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: root
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: password
+        ports:
+        - containerPort: 27017
