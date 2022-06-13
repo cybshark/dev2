@@ -16,7 +16,7 @@ spec:
         environment: test
     spec:
       containers:
-      - image: mongo:v4.2.0
+      - image: mongo:v4.2.1
         name: mongodb
       - command:
         - mongod
